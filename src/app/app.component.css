@@ -1,0 +1,20 @@
+.icon {
+    padding: 20px 14px 0px 0px;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.tab {
+    width: 100%;
+    padding-top: 0%;
+}
+
+.gridtile {
+    justify-content: start;
+}
+
+table {
+    width: 100%;
+}
