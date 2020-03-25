@@ -1,0 +1,171 @@
+<div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+    <!-- <div fxFlex>
+        <app-stat [bgClass]="'danger'" [icon]="'dashboard'" [count]="13" [label]="'New Tickets!'"></app-stat>
+    </div>
+    <div fxFlex>
+        <app-stat [bgClass]="'warn'" [icon]="'view_list'" [count]="12" [label]="'New task!'"></app-stat>
+    </div>
+    <div fxFlex>
+        <app-stat [bgClass]="'success'" [icon]="'shopping_cart'" [count]="124" [label]="'New Orders!'"></app-stat>
+    </div>
+    <div fxFlex>
+        <app-stat [bgClass]="'info'" [icon]="'contact_support'" [count]="13" [label]="'New Tickets!'"></app-stat>
+    </div> -->
+    <div fxFlex class="label">
+        <mat-label>Enquiry</mat-label>
+    </div>
+</div>
+
+
+<div class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
+    <div fxFlex>
+        <form name="form" [formGroup]="orderForm">
+            <mat-form-field>
+                <mat-label>Enquiry Code</mat-label>
+                <input matInput formControlName="eCode" placeholder="#001ABC" name="eCode">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Enquiry Date</mat-label>
+                <input required matInput [matDatepicker]="picker" formControlName="eDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Item Category</mat-label>
+                <mat-select name="iCategory" formControlName="eCate">
+                    <mat-option value="option1">Item 1</mat-option>
+                    <mat-option value="option2">Item 2</mat-option>
+                    <mat-option value="option3">Item 3</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Open Date</mat-label>
+                <input required matInput [matDatepicker]="openPicker" formControlName="eODate">
+                <mat-datepicker-toggle matSuffix [for]="openPicker"></mat-datepicker-toggle>
+                <mat-datepicker #openPicker></mat-datepicker>
+            </mat-form-field> <br>
+
+            <mat-form-field>
+                <mat-label>Enquiry Type</mat-label>
+                <mat-select name="eType" formControlName="eType">
+                    <mat-option value="option1">Direct</mat-option>
+                    <mat-option value="option2">Indirect</mat-option>
+                    <mat-option value="option3">Online</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Close Date</mat-label>
+                <input matInput [matDatepicker]="closePicker" formControlName="eCloseDate">
+                <mat-datepicker-toggle matSuffix [for]="closePicker"></mat-datepicker-toggle>
+                <mat-datepicker #closePicker></mat-datepicker>
+            </mat-form-field> <br>
+
+            <mat-form-field>
+                <mat-label>Enquiry Source</mat-label>
+                <mat-select formControlName="eSource">
+                    <mat-option value="option1">Reference</mat-option>
+                    <mat-option value="option2">Hr</mat-option>
+                    <mat-option value="option3">Senior</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Enquiry Status</mat-label>
+                <input matInput required placeholder="#001ABC" formControlName="eStatus">
+            </mat-form-field> <br>
+
+            <!-- <mat-form-field class="example-full-width">
+                <mat-label>Remarks</mat-label>
+                <input matInput placeholder="#001ABC" name="remarks" [(ngModel)]="remarks" #remark="ngModel">
+            </mat-form-field> -->
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Item details</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <table style="border: 1px solid black;">
+                        <tbody>
+                            <tr formArrayName="items"
+                                *ngFor="let item of orderForm.get('items').controls; let i = index;">
+                                <div [formGroupName]="i">
+                                    <td>
+                                        <mat-form-field>
+                                            <mat-label>Name</mat-label>
+                                            <input matInput formControlName="name" placeholder="Item name">
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field>
+                                            <mat-label>Item added Date</mat-label>
+                                            <input matInput [matDatepicker]="picker" formControlName="date">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field>
+                                            <mat-label>Favorite food</mat-label>
+                                            <mat-select formControlName="price">
+                                                <mat-option *ngFor="let food of foods" [value]="food.value">
+                                                    {{food.viewValue}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field>
+                                            <input type="text" placeholder="Pick one" aria-label="Number" matInput
+                                                formControlName="description" [matAutocomplete]="auto">
+                                            <mat-autocomplete #auto="matAutocomplete">
+                                                <mat-option *ngFor="let option of filteredOptions | async"
+                                                    [value]="option">
+                                                    {{option}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <button mat-raised-button color="warn" (click)="remove(i)">Delete</button>
+                                    </td>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" (click)="addItem()">Add Item</button>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+        <button mat-button (click)="display()">Display</button>
+    </div>
+
+</div>
+
+<!-- <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+    <div fxFlex *ngFor="let item of places">
+        <mat-card>
+            <img mat-card-image [src]="item.imgSrc">
+            <mat-card-header style="justify-content: center">
+                <mat-card-title>
+                    <h3 class="m-0">{{item.place}}</h3>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{item.description}}
+                </p>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button>{{item.charge}}</button>
+                <button mat-button>
+                    <mat-icon class="nav-icon">location_on</mat-icon> {{item.location}}
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div> -->
